@@ -1,6 +1,0 @@
-require 'rubygems'
-require 'sinatra/base'
-require 'riemann/dash/version'
-require 'riemann/dash/browser_config'
-require 'riemann/dash/config'
-require 'riemann/dash/app'

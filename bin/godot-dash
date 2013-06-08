@@ -1,0 +1,35 @@
+#!/usr/bin/env node
+
+var http = require('http');
+
+var dash = require('../lib/index')();
+
+//
+// One above that of riemann-dash
+//
+var port = 4568;
+
+http.createServer(function (req, res) {
+  dash(req, res, function (err) {
+    //
+    // Very basic error handling
+    //
+    res.setHeader('content-type', 'text/plain');
+    if (err) {
+      res.statusCode = 500;
+      res.end(err.stack);
+    }
+    else {
+      res.statusCode = 404;
+      res.end('404 Not Found');
+    }
+  });
+}).listen(port, function (err) {
+  if (err) {
+    throw err;
+  }
+
+  console.log('godot-dash is online');
+  console.log('listening http://0.0.0.0:' + port);
+  console.log('CTRL-C to stop');
+});
