@@ -6,7 +6,7 @@
   "main": "./lib/index.js",
   "scripts": {
     "start": "node ./bin/godot-dash",
-    "css": "sass ./sass/css.scss ./public/css.css",
+    "css": "lessc ./less/css.less ./public/css.css",
     "engine.io-client": "curl https://raw.github.com/LearnBoost/engine.io-client/master/engine.io.js -o public/vendor/engine.io.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
