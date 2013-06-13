@@ -17,7 +17,7 @@ var dashboard = dash.createServer();
 godot.createServer({
   type: 'tcp',
   reactors: [
-    dashboard.reactor
+    dashboard.reactor(godot)
   ]
 }).listen(godotPort);
 
