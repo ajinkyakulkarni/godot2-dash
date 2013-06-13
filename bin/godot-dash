@@ -10,7 +10,7 @@ var godotPort = 1337,
 // dashboard is an object with two properties:
 // 
 // * dashboard.server: http server w/ static assets and engine.io hooks
-// * dashboard.reactor: a godot reactor
+// * dashboard.reactor: use this to create a godot reactor
 //
 var dashboard = dash.createServer();
 
