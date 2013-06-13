@@ -130,7 +130,7 @@ var subs = (function() {
         t1 = Date.now();
         if (active) {
           var event = JSON.parse(e.data);
-          event.time = Date.parse(event.time);
+          event.time = new Date(event.time);
           clock.advance(event.time);
 
           // Update local index.
