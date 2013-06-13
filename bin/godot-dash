@@ -6,12 +6,6 @@ var dash = require('../lib/index'),
 var godotPort = 1337,
     httpPort = 1338;
 
-//
-// dashboard is an object with two properties:
-// 
-// * dashboard.server: http server w/ static assets and engine.io hooks
-// * dashboard.reactor: use this to create a godot reactor
-//
 var dashboard = dash.createServer();
 
 godot.createServer({
