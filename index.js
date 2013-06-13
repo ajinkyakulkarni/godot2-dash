@@ -6,9 +6,8 @@ var createMiddleware = require('./lib/middleware'),
 var dash = module.exports = {};
 
 dash.createServer = function (options) {
-  var server = http.createServer(createMiddleware(options));
-
-  var reactor = createReactor({ server: server });
+  var server = http.createServer(createMiddleware(options)),
+      reactor = createReactor(server);
 
   server.reactor = reactor;
 
