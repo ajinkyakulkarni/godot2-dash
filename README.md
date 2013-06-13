@@ -41,11 +41,11 @@ var dashboard = dash.createServer();
 godot.createServer({
   type: 'tcp',
   reactors: [
-    dashboard.reactor
+    dashboard.reactor(godot)
   ]
 }).listen(1337);
 
-dashboard.server.listen(1338);
+dashboard.listen(1338);
 ```
 
 If you want to use the dash in your own middleware stack, you can create the
@@ -56,14 +56,14 @@ middleware and reactor separately using `dash.createMiddleware` and
 
 Returns a middleware. Options are the same as those of `dash.createServer`.
 
-### dash.createReactor(options)
+### dash.createReactor(server)
 
-Returns a godot reactor. Options are:
+Returns a function used for creating a reactor. Pass in a server to attach
+engine.io to.
 
-* server: An http server to attach engine.io to. If this is supplied, host/port
-  are ignored.
-* port: The port to create the engine.io server with.
-* host: The host to create the engine.io server with. Defaults to `0.0.0.0`.
+#### reactor(godot)
+
+Returns a reactor. Pass in an instance of godot to register the reactor with.
 
 # License
 
