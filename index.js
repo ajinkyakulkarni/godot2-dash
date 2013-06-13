@@ -1,7 +1,7 @@
 var http = require('http');
 
-var createMiddleware = require('./middleware'),
-    createReactor = require('./reactor');
+var createMiddleware = require('./lib/middleware'),
+    createReactor = require('./lib/reactor');
 
 var dash = module.exports = {};
 

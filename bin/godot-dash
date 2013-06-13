@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-var dash = require('../lib/index'),
+var dash = require('../index'),
     godot = require('godot');
 
 var godotPort = 1337,

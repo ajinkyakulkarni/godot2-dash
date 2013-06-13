@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "description": "HTTP dashboard for Nodejitsu's godot; A port of riemann-dash",
   "author": "Joshua Holbrook",
-  "main": "./lib/index.js",
+  "main": "./index.js",
   "scripts": {
     "start": "node ./bin/godot-dash",
     "css": "lessc ./less/css.less ./public/css.css",
