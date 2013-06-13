@@ -21,7 +21,7 @@ godot.createServer({
   ]
 }).listen(godotPort);
 
-dashboard.server.listen(httpPort, function (err) {
+dashboard.listen(httpPort, function (err) {
   if (err) {
     throw err;
   }
