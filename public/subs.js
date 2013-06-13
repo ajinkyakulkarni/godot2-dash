@@ -108,7 +108,7 @@ var subs = (function() {
       if (server_type == "sse") {
         ws = this.ws = new EventSource(this.url());
       } else {
-        ws = this.ws = new WebSocket(this.url());
+        ws = this.ws = new eio.Socket(this.url());
       }
 
       ws.onopen = _.bind(function() {
