@@ -1,6 +1,6 @@
 dash = (function() {
   var defaultWorkspace = {
-    name: "Riemann",
+    name: "Godot",
     view: {
       type: 'Balloon',
       child: {
@@ -8,7 +8,7 @@ dash = (function() {
         children: [
           {
             type: 'Title',
-            title: "Riemann"
+            title: "Godot"
           },
           {
             type: 'Help',
