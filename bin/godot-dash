@@ -6,12 +6,16 @@ var dash = require('../index'),
 var godotPort = 1337,
     httpPort = 1338;
 
-var dashboard = dash.createServer();
+var dashboard = dash
+  .createServer()
+  .register(godot)
+;
 
 godot.createServer({
   type: 'tcp',
   reactors: [
-    dashboard.reactor(godot)
+    godot.reactor()
+      .dashboard()
   ]
 }).listen(godotPort);
 

@@ -1,18 +1,20 @@
 var http = require('http');
 
-var createMiddleware = require('./lib/middleware'),
-    createReactor = require('./lib/reactor');
+var middleware = require('./lib/middleware'),
+    reactor = require('./lib/reactor');
 
 var dash = module.exports = {};
 
 dash.createServer = function (options) {
-  var server = http.createServer(createMiddleware(options)),
-      reactor = createReactor(server);
+  var server = http.createServer(middleware(options));
 
-  server.reactor = reactor;
+  server.register = function (godot) {
+    godot.reactor.register('dashboard', reactor(server));
+    return server;
+  };
 
   return server;
 }
 
-dash.createMiddleware = createMiddleware;
-dash.createReactor = createReactor;
+dash.middleware = middleware;
+dash.reactor = reactor;

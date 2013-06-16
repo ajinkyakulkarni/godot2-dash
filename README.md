@@ -24,11 +24,7 @@ Takes an options hash with the following properties:
 * config: File location for the config file (defaults to
   ./godot-dash/config.json )
 
-Returns an object with two properties:
-
-* server: An HTTP server with the dashboard loaded, engine.io attached, and
-  ready to listen.
-* reactor: A godot reactor initialized and ready to be passed to godot
+Returns an HTTP server with an extra method, `register`.
 
 Usage looks something like this:
 
@@ -36,34 +32,47 @@ Usage looks something like this:
 var godot = require('godot'),
     dash = require('godot-dash');
 
-var dashboard = dash.createServer();
+var dashboard = dash
+  .createServer()
+  .register(godot)
+;
 
 godot.createServer({
   type: 'tcp',
   reactors: [
-    dashboard.reactor(godot)
+    godot.reactor()
+      .dashboard()
   ]
 }).listen(1337);
 
 dashboard.listen(1338);
 ```
 
-If you want to use the dash in your own middleware stack, you can create the
-middleware and reactor separately using `dash.createMiddleware` and
-`dash.createReactor` individually.
+### server.register(godot)
 
-### dash.createMiddleware(options)
+Register the dashboard reactor with godot, as "dashboard". Returns `server`.
 
-Returns a middleware. Options are the same as those of `dash.createServer`.
+### dash.middleware(options)
 
-### dash.createReactor(server)
+Returns a middleware. Options are the same as those of `dash.createServer`. You
+can use this if you want to add the godot dashboard to an existing middleware
+stack without creating a new server.
 
-Returns a function used for creating a reactor. Pass in a server to attach
-engine.io to.
+### dash.reactor(server)
 
-#### reactor(godot)
+Returns a reactor constructor. Pass in an http server to attach
+engine.io to. You can use this in conjunction with `dash.middleware` to add the
+dashboard to an existing middleware stack.
 
-Returns a reactor. Pass in an instance of godot to register the reactor with.
+In order to use a third-party godot reactor, one must register it with godot
+by running something like:
+
+```js
+
+var Dashboard = dash.reactor(server); // server is an http server
+
+godot.reactor.register('dashboard', Dashboard);
+```
 
 # License
 
