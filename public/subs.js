@@ -108,7 +108,9 @@ var subs = (function() {
       if (server_type == "sse") {
         ws = this.ws = new EventSource(this.url());
       } else {
-        ws = this.ws = new eio.Socket(this.url());
+        ws = this.ws = new eio.Socket(this.url(), {
+          transports: ['websocket', 'flashsocket', 'polling']
+        });
       }
 
       ws.onopen = _.bind(function() {

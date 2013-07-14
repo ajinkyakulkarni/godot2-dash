@@ -7,3 +7,4 @@ pkg/
 *.log
 /test/tmp/
 /config
+node_modules
