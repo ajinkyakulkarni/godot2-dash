@@ -52,8 +52,9 @@ html,table {
   position: absolute;
   top: 0;
   left: 0;
-  right: 0;
+  right: calc(-144px - 3px - 144px - 3px);
   font-size: 15px;
+  transition: right 0.2s ease-in-out;
 
   form {
     height: 100%;
@@ -89,7 +90,11 @@ html,table {
       color: @dark-grey;
     }
   }
+  div.server {
+    width: 144px;
+  }
   input.server {
+    width: 144px;
     height: calc(~"100% - 6px");
   }
   input.server:focus {
@@ -119,6 +124,24 @@ html,table {
       background: rgba(0,0,0,0.25);
       width: 1%;
     }
+  }
+  .load:hover {
+    color: @dark-grey;
+  }
+
+  .toggle {
+    float: right;
+    opacity: 0.2;
+    font-size: 10px;
+    margin-top: 3px;
+    height: calc(~"100% - 6px");
+    width: 22px;
+    padding: 6px 6px;
+    box-sizing: border-box;
+  }
+  .toggle:hover {
+    opacity: 0.5;
+    cursor: pointer;
   }
 
   .button {
@@ -179,6 +202,13 @@ html,table {
         visibility: visible;
       }
     }
+  }
+}
+#toolbar.open {
+  right: 0;
+
+  .toggle {
+    transform: scale(-1, 1);
   }
 }
 

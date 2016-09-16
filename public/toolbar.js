@@ -13,6 +13,7 @@ var toolbar = (function() {
   });
  
   var pager = $('<div class="pager">');
+  var toggle = $('<div class="toggle">◀</div>');
   var load = $('<div class="load"><div class="bar load1" /><div class="bar load5" /><span title="1- and 5-second subscription manager load averages">load</span></div>');
   var server = $('<input class="server" type="text" name="text">');
   var server_type = $('<div class="server"><label><input type="radio" id="ws" name="server_type" value="ws" checked>websockets</label><label><input type="radio" id="sse" name="server_type" value="sse">sse</label></div>');
@@ -23,9 +24,19 @@ var toolbar = (function() {
   form.append(server_type);
   form.append(server);
   form.append(load);
-  form.submit(function(e) { 
+  form.append(toggle);
+  form.submit(function(e) {
     return false;
   });
+
+  // Toggle ///////////////////////////////////////////////////////////////////
+
+  var toggler = function() {
+    toolbar.toggleClass("open");
+  }
+
+  toggle.click(toggler);
+  toolbar.dblclick(toggler);
 
   // Load /////////////////////////////////////////////////////////////////////
 

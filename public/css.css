@@ -26,8 +26,9 @@ table {
   position: absolute;
   top: 0;
   left: 0;
-  right: 0;
+  right: calc(-294px);
   font-size: 15px;
+  transition: right 0.2s ease-in-out;
 }
 #toolbar form {
   height: 100%;
@@ -61,7 +62,11 @@ table {
 #toolbar .server label:hover {
   color: #1F1F1F;
 }
+#toolbar div.server {
+  width: 144px;
+}
 #toolbar input.server {
+  width: 144px;
   height: calc(100% - 6px);
 }
 #toolbar input.server:focus {
@@ -89,6 +94,23 @@ table {
   border-radius: 0;
   background: rgba(0, 0, 0, 0.25);
   width: 1%;
+}
+#toolbar .load:hover {
+  color: #1F1F1F;
+}
+#toolbar .toggle {
+  float: right;
+  opacity: 0.2;
+  font-size: 10px;
+  margin-top: 3px;
+  height: calc(100% - 6px);
+  width: 22px;
+  padding: 6px 6px;
+  box-sizing: border-box;
+}
+#toolbar .toggle:hover {
+  opacity: 0.5;
+  cursor: pointer;
 }
 #toolbar .button {
   font-weight: bold;
@@ -139,6 +161,12 @@ table {
 }
 #toolbar .pager li.current .delete {
   visibility: visible;
+}
+#toolbar.open {
+  right: 0;
+}
+#toolbar.open .toggle {
+  transform: scale(-1, 1);
 }
 #event-pane {
   position: absolute;
