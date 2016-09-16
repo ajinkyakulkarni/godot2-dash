@@ -23,13 +23,15 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "ecstatic": "~0.4.5",
     "engine.io": "^1.6.11",
-    "godot": "~0.5.3",
     "riemann-query-parser": "^1.0.1"
   },
   "devDependencies": {
     "iced-coffee-script": "^108.0.11",
-    "less": "~1.4.0"
+    "less": "^2.7.1"
+  },
+  "peerDependencies": {
+    "ecstatic": "^2.1.0",
+    "godot2": "^1.9.9"
   }
 }
