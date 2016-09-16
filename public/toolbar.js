@@ -13,7 +13,7 @@ var toolbar = (function() {
   });
  
   var pager = $('<div class="pager">');
-  var load = $('<div class="load"><div class="bar load1" /><div class="bar load5" /><span title="1- and 5-second subscription manager load averages">Load</span></div>');
+  var load = $('<div class="load"><div class="bar load1" /><div class="bar load5" /><span title="1- and 5-second subscription manager load averages">load</span></div>');
   var server = $('<input class="server" type="text" name="text">');
   var server_type = $('<div class="server"><label><input type="radio" id="ws" name="server_type" value="ws" checked>websockets</label><label><input type="radio" id="sse" name="server_type" value="sse">sse</label></div>');
   var server_type_selector = $("input[name=server_type]");
@@ -30,7 +30,7 @@ var toolbar = (function() {
   // Load /////////////////////////////////////////////////////////////////////
 
   window.setInterval(function() {
-    load.find('span').text("Load " + 
+    load.find('span').text("load " +
         format.float(subs.load1()) + ', ' +
         format.float(subs.load5()));
     load.find(".load1").animate({width: (subs.load1() * 100) + "%"}, 200);
