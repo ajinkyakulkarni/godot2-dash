@@ -128,7 +128,8 @@ table {
   padding: 0;
 }
 #toolbar .pager li .delete {
-  display: none;
+  display: inline;
+  visibility: hidden;
 }
 #toolbar .pager li:hover {
   background: #f8f8f8;
@@ -137,7 +138,7 @@ table {
   background: #c5c5c5;
 }
 #toolbar .pager li.current .delete {
-  display: inline;
+  visibility: visible;
 }
 #event-pane {
   position: absolute;
