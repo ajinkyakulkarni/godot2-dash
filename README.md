@@ -1,6 +1,6 @@
-# Godot-Dash
+# Godot2-Dash
 
-A javascript, engine.io-powered dashboard for Godot. A port of riemann-dash
+A javascript, engine.io-powered dashboard for [Godot2][godot2]. A port of [riemann-dash][riemann-dash]
 from ruby/sinatra to node.js.
 
 # Get started
@@ -77,3 +77,6 @@ godot.reactor.register('dashboard', Dashboard);
 # License
 
 MIT
+
+  [godot2]: https://github.com/nextorigin/godot2
+  [riemann-dash]: https://github.com/riemann/riemann-dash

@@ -1,7 +1,7 @@
 {
-  "name": "godot-dash",
-  "version": "0.0.1",
-  "description": "HTTP dashboard for Nodejitsu's godot; A port of riemann-dash",
+  "name": "godot2-dash",
+  "version": "0.2.13",
+  "description": "HTTP dashboard for Godot2; A port of riemann/riemann-dash",
   "author": "Joshua Holbrook",
   "main": "./index.js",
   "scripts": {
