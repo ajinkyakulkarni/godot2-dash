@@ -8,6 +8,8 @@
     "start": "node ./bin/godot-dash",
     "css": "lessc ./less/css.less ./public/css.css",
     "engine.io-client": "curl https://raw.github.com/LearnBoost/engine.io-client/0.6.2/engine.io.js -o public/vendor/engine.io.js",
+    "watch": "iced --watch --bare --map --runtime node -o ./lib -c src/",
+    "build": "iced --bare --map --runtime node -o ./lib -c src/",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -23,9 +25,11 @@
   "dependencies": {
     "ecstatic": "~0.4.5",
     "engine.io": "0.6.2",
-    "godot": "~0.5.3"
+    "godot": "~0.5.3",
+    "riemann-query-parser": "^1.0.1"
   },
   "devDependencies": {
+    "iced-coffee-script": "^108.0.11",
     "less": "~1.4.0"
   }
 }
