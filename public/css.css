@@ -10,35 +10,62 @@ body {
   margin: 0;
   padding: 0;
   background: #fff;
-  color: #1f1f1f;
+  color: #1F1F1F;
 }
 html,
 table {
-  font-family: "HelveticaNeue", "Helvetica Neue", "HelveticaNeueRoman", "HelveticaNeue-Roman", "Helvetica Neue Roman", 'TeXGyreHerosRegular', "Helvetica", "Tahoma", "Geneva", "Arial", sans-serif;
+  font-family: Helvetica, "Helvetica Neue", HelveticaNeue, "TeX Gyre Heros", TeXGyreHeros, FreeSans, "Nimbus Sans L", "Liberation Sans", Arimo, Arial, sans-serif;
+  letter-spacing: -0.02em;
   font-weight: 400;
   font-stretch: normal;
   font-size: 14px;
 }
 #toolbar {
-  height: 28px;
+  height: 32px;
   overflow: hidden;
   position: absolute;
-  top: 3px;
-  left: 3px;
-  right: 3px;
-  font-size: 12px;
+  top: 0;
+  left: 0;
+  right: 0;
+  font-size: 15px;
+}
+#toolbar form {
+  height: 100%;
 }
 #toolbar input {
-  background: #dedede;
-  border: 1px solid #1f1f1f;
+  border: 2px solid #aaa;
+  color: #aaa;
   margin: 3px;
+  margin-right: 5px;
   padding: 3px 6px;
 }
-#toolbar input:hover {
-  background: #ebebeb;
+#toolbar input:hover,
+#toolbar input:focus {
+  color: #1F1F1F;
 }
 #toolbar .server {
   float: right;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  margin-right: 3px;
+  letter-spacing: -0.02em;
+}
+#toolbar .server label {
+  margin: 0 6px 0 3px;
+  font-size: 12px;
+  font-weight: bold;
+  color: #aaa;
+}
+#toolbar .server label:hover {
+  color: #1F1F1F;
+}
+#toolbar input.server {
+  height: calc(100% - 6px);
+}
+#toolbar input.server:focus {
+  outline: 0;
 }
 #toolbar .load {
   position: relative;
@@ -46,10 +73,17 @@ table {
   float: right;
   width: 100px;
   padding: 4px 6px 3px 6px;
-  border: 1px solid #1f1f1f;
+  border: 2px solid #aaa;
+  color: #aaa;
+  display: flex;
+  align-items: center;
+  height: calc(100% - 6px);
+  box-sizing: border-box;
+  font-weight: bold;
 }
 #toolbar .load span {
   z-index: -1;
+  font-size: 12px;
 }
 #toolbar .load .bar {
   border-radius: 0;
@@ -57,15 +91,30 @@ table {
   width: 1%;
 }
 #toolbar .button {
+  font-weight: bold;
+  height: 26px;
+  min-width: 26px;
+  margin: 0 17px 0 0;
+  padding: 3px 8px;
+  box-sizing: border-box;
+  margin-left: 0.25em;
+  position: relative;
   display: inline-block;
   margin: 3px;
-  padding: 3px 6px;
-  border: 1px solid #cccccc;
+  border: none;
   background: #dedede;
   cursor: pointer;
 }
+#toolbar .button .delete {
+  font-size: 16px;
+  opacity: 0.5;
+  margin-left: 1.5em;
+}
 #toolbar .button:hover {
   background: #ebebeb;
+}
+#toolbar .button.add {
+  text-align: center;
 }
 #toolbar .pager {
   margin: 0;
@@ -85,11 +134,50 @@ table {
   background: #f8f8f8;
 }
 #toolbar .pager li.current {
-  border-color: #1f1f1f;
+  background: #c5c5c5;
 }
 #toolbar .pager li.current .delete {
   display: inline;
-  margin-left: 10px;
+}
+#event-pane {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: auto;
+  max-height: 30%;
+  overflow-y: auto;
+  z-index: 100;
+  background: #fff;
+  border-top: 1px solid #dedede;
+  padding: 3px;
+}
+#event-pane.active {
+  box-shadow: 0 0 40px rgba(0, 0, 0, 0.2);
+}
+#event-pane * {
+  float: left;
+  padding: 3px;
+}
+#event-pane .state {
+  margin: 0 3px;
+  padding: 3px 6px;
+  border-radius: 3px;
+}
+#event-pane .host {
+  font-style: italic;
+}
+#event-pane .ttl:before {
+  color: #888;
+  content: 'ttl ';
+}
+#event-pane .tags:before {
+  color: #888;
+  content: "tags: ";
+}
+#event-pane .description {
+  clear: both;
+  white-space: pre-wrap;
 }
 #view {
   position: absolute;
@@ -108,7 +196,7 @@ table {
   right: 0;
   margin: 3px;
   padding: 3px;
-  background: #cccccc;
+  background: #ccc;
   border-radius: 3px;
 }
 .bar {
@@ -130,23 +218,23 @@ table {
 .state.okay,
 .bar.ok,
 .bar.okay {
-  background: #06fa23;
+  background: #06FA23;
   color: #000;
 }
 .state.warning,
-.bar.warning {
-  background: #ffc712;
+.state.warn,
+.bar.warning,
+.bar.warn {
+  background: #FFC712;
   color: #000;
 }
 .state.critical,
 .state.failure,
+.state.err,
 .bar.critical,
-.bar.failure {
-  background: #ff6513;
-  color: #000;
-}
-.state.expired {
-  background: $purple;
+.bar.failure,
+.bar.err {
+  background: #FF6513;
   color: #000;
 }
 .view .query {
@@ -233,9 +321,8 @@ table {
   min-height: 400px;
 }
 #simplemodal-container a.modalCloseImg {
-  background: url(/x.png) no-repeat;
+  background: url(x.png) no-repeat;
   /* adjust url as required */
-
   width: 25px;
   height: 29px;
   display: inline;
@@ -255,6 +342,7 @@ textarea.query {
   width: 100%;
 }
 h2 {
+  letter-spacing: -0.06em;
   display: block;
   padding: 3px;
   margin: 0;
@@ -285,6 +373,37 @@ h2 {
   right: 0;
   width: 100%;
   text-align: right;
+}
+.dial h2 {
+  position: absolute;
+  height: 25%;
+  width: 75%;
+  bottom: 3px;
+  right: 3px;
+  text-align: right;
+}
+.dial canvas {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+}
+.dial .value {
+  position: absolute;
+  height: 25%;
+  width: 75%;
+  top: 3px;
+  left: 3px;
+  text-align: left;
+}
+.list ul {
+  display: inline-block;
+  position: relative;
+}
+.list ul li {
+  background: #cacaca;
+}
+.grid {
+  white-space: nowrap;
 }
 .grid h2 {
   height: 28px;
@@ -317,6 +436,9 @@ h2 {
   width: 100%;
   border-spacing: 3px;
 }
+.grid table th {
+  text-align: right;
+}
 .grid table thead {
   margin: 0;
   padding: 0;
@@ -325,7 +447,7 @@ h2 {
   position: relative;
   top: 3px;
   vertical-align: bottom;
-  text-align: right;
+  text-align: left;
 }
 .grid tr > *:first-child {
   width: 1px;
@@ -398,4 +520,29 @@ h2 {
   left: 0;
   right: 0;
   bottom: 0;
+}
+.log.view .scroll {
+  overflow-x: hidden;
+  overflow-y: hidden;
+  position: absolute;
+  top: 28px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+.log.view table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.log.view thead {
+  text-align: left;
+}
+.log.view td,
+.log.view th {
+  padding: 2px;
+  vertical-align: top;
+  border-bottom: 1px solid #eee;
+}
+.help .box {
+  padding: 20px;
 }
