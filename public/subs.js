@@ -113,25 +113,25 @@ var subs = (function() {
         });
       }
 
-      ws.onopen = _.bind(function() {
+      ws.on("open", _.bind(function() {
         console.log("Socket opened", this.query);
-      }, this);
+      }, this));
 
-      ws.onclose = _.bind(function(e) {
+      ws.on("close", _.bind(function(e) {
         console.log("Socket closed", this.query);
         this.ws = null;
-      }, this);
+      }, this));
 
-      ws.onerror = _.bind(function(e) {
+      ws.on("error", _.bind(function(e) {
         console.log("Socket error", this.query);
         errorQueue.push(e);
         this.close();
-      }, this);
+      }, this));
 
-      ws.onmessage = _.bind(function(e) {
+      ws.on("message", _.bind(function(data) {
         t1 = Date.now();
         if (active) {
-          var event = JSON.parse(e.data);
+          var event = JSON.parse(data);
           event.time = new Date(event.time);
           clock.advance(event.time);
 
@@ -149,7 +149,7 @@ var subs = (function() {
         var t2 = Date.now();
         load1(t1, t2);
         load5(t1, t2);
-      }, this);
+      }, this));
 
       return this;
     },
