@@ -38,7 +38,7 @@ body {
   color: @dark-grey;
 }
 
-html,table {
+html,table,input {
   font-family: Helvetica,"Helvetica Neue",HelveticaNeue,"TeX Gyre Heros",TeXGyreHeros,FreeSans,"Nimbus Sans L","Liberation Sans",Arimo,Arial,sans-serif;
   letter-spacing: -0.02em;
   font-weight:400;
@@ -148,8 +148,7 @@ html,table {
     font-weight: bold;
     height: 26px;
     min-width: 26px;
-    margin: 0 17px 0 0;
-    padding: 3px 8px;
+    padding: 4px 8px;
     box-sizing: border-box;
     margin-left: 0.25em;
     position: relative;
@@ -169,7 +168,12 @@ html,table {
     background: lighten(@off-white, 5%);
   }
   .button.add {
+    opacity: 0.5;
+    background: none;
     text-align: center;
+  }
+  .button.add:hover {
+    opacity: 1;
   }
 
   .pager {
@@ -182,6 +186,26 @@ html,table {
       list-style-type: none;
       margin: 0;
       padding: 0;
+
+      input {
+        font-weight: bold;
+        font-size: 15px;
+        line-height: 2em;
+        letter-spacing: -0.02em;
+        height: 26px;
+        min-width: 26px;
+        padding: 3px 8px;
+        box-sizing: border-box;
+        margin-left: 0.25em;
+        position: relative;
+        display: inline-block;
+        margin: 3px;
+        border: none;
+        background: darken(@off-white, 10%);
+      }
+      input:focus {
+        outline: 0
+      }
     }
 
     li {

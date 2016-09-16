@@ -36,7 +36,9 @@ var toolbar = (function() {
   }
 
   toggle.click(toggler);
-  toolbar.dblclick(toggler);
+  load.dblclick(toggler);
+  server.dblclick(toggler);
+  server_type.dblclick(toggler);
 
   // Load /////////////////////////////////////////////////////////////////////
 
