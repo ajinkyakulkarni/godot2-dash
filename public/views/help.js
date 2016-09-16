@@ -5,13 +5,13 @@
       this.el.addClass("help");
       this.el.append([
         '<div class="box">',
-        '  <h3>Welcome to Godot-Dash</h3>',
+        '  <h3>Welcome to Godot2-Dash</h3>',
         '  <p>',
         '    This is a port of',
         '    <a href="https://github.com/aphyr/riemann-dash">riemann-dash</a>',
         '    to <a href="http://nodejs.org">node.js</a> and',
-        '    <a href="https://github.com/nodejitsu/godot">godot</a>.',
-        '    It is <a href="https://github.com/jesusabdullah/godot-dash">',
+        '    <a href="https://github.com/nextorigin/godot2">godot2</a>.',
+        '    It is <a href="https://github.com/nextorigin/godot2-dash">',
         '    an open source project on GitHub</a>.',
         '  </p>',
         '  <p>',
