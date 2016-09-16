@@ -67,6 +67,7 @@ input {
   width: 144px;
 }
 #toolbar input.server {
+  font-size: 12px;
   width: 144px;
   height: calc(100% - 6px);
 }
