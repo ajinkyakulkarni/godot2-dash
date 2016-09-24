@@ -62,6 +62,8 @@ var clock = (function() {
     // The effective clock is the current stream time, plus the delta from the
     // stream time to the local time, multiplied by the convergence fraction.
     clock = stream_now + ((now - stream_now) * convergence_fraction);
+    var latency = (now - stream_clock)/1000;
+    if (latency > 30) console.log("high event latency:", latency);
 
     $.each(callbacks, function(k, f) {
       f(clock);
