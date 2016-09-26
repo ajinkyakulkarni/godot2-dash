@@ -8,8 +8,11 @@
     "start": "node ./bin/godot-dash",
     "css": "lessc ./less/css.less ./public/css.css",
     "engine.io-client": "curl https://raw.githubusercontent.com/socketio/engine.io-client/1.6.11/engine.io.js -o public/vendor/engine.io.js",
-    "watch": "iced --watch --bare --map --runtime node -o ./lib -c src/",
-    "build": "iced --bare --map --runtime node -o ./lib -c src/",
+    "watch:server": "iced --watch --bare --map --runtime node -o ./lib -c src/",
+    "watch:client": "iced --watch --bare --map --runtime node -o ./public -c src-public/",
+    "build:server": "iced --bare --map --runtime node -o ./lib -c src/",
+    "build:client": "iced --bare --map --runtime node -o ./public -c src-public/",
+    "build": "npm run build:server && npm run build:client",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
