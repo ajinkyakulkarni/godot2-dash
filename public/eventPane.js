@@ -50,7 +50,7 @@ var eventPane = (function() {
     // Remaining fields
     _.each(event, function(value, field) {
       if (! _.contains(fixedFields, field)) {
-        table.append(rowTemplate({field: field, value: value}));
+        table.append(rowTemplate({field: field, value: JSON.stringify(value)}));
       }
     });
   };
