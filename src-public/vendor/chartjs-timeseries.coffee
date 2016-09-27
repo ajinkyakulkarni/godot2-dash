@@ -10,14 +10,16 @@ class TimeSeriesDatasetController extends Chart.controllers.line
     super
 
   prepareForUpdate: ->
-    @_lastData = @getMeta().data
+    # make a copy so we can delete used indices
+    @_lastData = @getMeta().data[0..]
 
   updateElement: (point, index, reset) ->
     super
     return unless @_lastData
     oldposition = if @direction isnt "rtl" then index - 1 else index + 1
-    oldpoint    = @_lastData[oldposition]
-    point._view = oldpoint._view if oldpoint
+    if oldpoint = @_lastData[oldposition]
+      point._view = oldpoint._view
+      @_lastData[oldposition] = null
 
 
 Chart.controllers.timeseries = TimeSeriesDatasetController
@@ -40,7 +42,7 @@ class TimeSeries extends Chart.Controller
     xTickCallback = (value) ->
       if value.toString().length > 0 then value else null
     yTickCallback = (value) ->
-      if (typeof value is "number") then (Chart.ticks.formatters.linear arguments...) else null
+      if (typeof value is "number") then (Chart.Ticks.formatters.linear arguments...) else null
     ## BUGFIX we have to set scale types or they won't be merged
     defaultScaleType = "linear"
     xScale = config.options?.scales?.xAxes?[0]
@@ -51,13 +53,13 @@ class TimeSeries extends Chart.Controller
     defaults =
       scales:
         xAxes: [{gridLines, type: (xScale?.type or defaultScaleType), ticks: {autoSkip: false, maxRotation: 0, callback: xTickCallback}}]
-        yAxes: [{gridLines, type: (yScale?.type or defaultScaleType), ticks: {callback: yTickCallback}}]
+        yAxes: [{gridLines, type: (yScale?.type or defaultScaleType), ticks: {callback: xTickCallback}}]
 
     config.type = "timeseries"
     config.options = helpers.configMerge defaults, config.options
     ## BUGFIX for when types are set or we get doubled axiis from Chart.defaults.global
     ## when Chart.core.controller calls helpers.configMerge
-    delete config.options?.scales?.xAxes?[0]?.type
+    # delete config.options?.scales?.xAxes?[0]?.type
     delete config.options?.scales?.yAxes?[0]?.type
 
     ## DEPRECATED after 2.3.0
@@ -98,7 +100,22 @@ class TimeSeries extends Chart.Controller
 
     super me
 
+  buildOrUpdateDatasetController: (dataset, datasetIndex) ->
+    meta = @getDatasetMeta datasetIndex
+
+    unless meta.type
+      meta.type = dataset.type or @config.type
+
+    if meta.controller
+      meta.controller.updateIndex datasetIndex
+    else
+      meta.controller = new Chart.controllers[meta.type] this, datasetIndex
+
+    # meta.controller.buildOrUpdateElements()
+    meta.controller.reset()
+    meta.controller
+
   prepareForUpdate: ->
     for dataset, i in @data.datasets
       {controller} = @getDatasetMeta i
-      controller?.prepareForUpdate()
+      controller.prepareForUpdate()

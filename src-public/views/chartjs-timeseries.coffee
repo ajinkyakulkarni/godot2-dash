@@ -2,7 +2,6 @@ extend = (root, objs...) ->
   root[key] = value for key, value of obj for obj in objs
   root
 
-
 # HTML template used to edit this view
 editTemplate = _.template '<label for="title">title</label>' +
   '<input type="text" name="title" value="{{title}}" /><br />' +
@@ -38,8 +37,8 @@ class TimeseriesLine extends view.View
     fontSize:    11
     fontColor:  "#444"
 
-    max:         10
-    min:         10
+    max:         null
+    min:         null
     stepSize:    null
     stackMode:   "false"
     lineWidth:   1
@@ -50,16 +49,17 @@ class TimeseriesLine extends view.View
     @[key]   = value for key, value of settings
 
     # Set up HTML
-    canvas = $ '<canvas class="container"></canvas>'
+    @container = $ '<div class="container"></div>'
+    @canvas = $ '<canvas></canvas>'
     if @title
       @el.addClass "flot"
       @el.append '<h2></h2>'
-         .append canvas
+         .append @container
       @el.find("h2").text @title
-      @container = @el.find ".container"
     else
-      @el.replaceWith canvas
-      @container = canvas
+      @el.replaceWith @container
+
+    @container.append @canvas
 
     # Create local copies of slurred functions
     @reflowGraph  = util.slur 200, @reflowGraph
@@ -71,44 +71,46 @@ class TimeseriesLine extends view.View
     # Time series state
     @series = {}
     @data =
-      labels:   []
       datasets: []
-      times:    []
 
     unless options.virtual
       @reflow()
       # Initialize graph
       @setupGraph new Date
       @clockSub = clock.subscribe (t) =>
-        @trimData t
-        # @updateTime t
-        #          @setupGraph(t)
+        @setGraphData()
 
       # Subscribe to our query
       @sub = subs.subscribe @query, (e) =>
-        # @updateTime e.time
+        @trimData e.time
+        @updateTime e.time
         @update e
 
   # Create our Flot graph
   setupGraph: (t) ->
-    if @container.width() is 0 or @container.height() is 0
+    if @canvas.width() is 0 or @canvas.height() is 0
       if @graph?
         @graph.shutdown()
         @graph = null
 
     # Initialize Flot
-    @container.empty()
+    @canvas.empty()
     stacked   = @stackMode is "true"
     gridLines =
       lineWidth: 1
-      color: "#aaa"
+      color: "#ddd"
 
     options =
+      responsive:          true
+      maintainAspectRatio: false
       scales:
-        xAxes: [{gridLines, ticks: {@fontSize, @fontColor}}]
+        xAxes: [{type: "time", gridLines, ticks: {@fontSize, @fontColor}}]
         yAxes: [{gridLines, stacked, ticks: {@fontSize, @fontColor}}]
 
-    @graph = new TimeSeries @container, {@data, options}
+    options.scales.yAxes[0].ticks.min = (parseFloat @min) if @min? and (typeof @min isnt "string" or @min.trim() isnt "")
+    options.scales.yAxes[0].ticks.max = (parseFloat @max) if @max? and (typeof @max isnt "string" or @max.trim() isnt "")
+
+    @graph = new TimeSeries @canvas, {@data, options}
 
   # Called as the clock advances to new times.
   updateTime: (t) ->
@@ -117,7 +119,7 @@ class TimeseriesLine extends view.View
     [axis]        = @graph.options.scales.xAxes
     axis.time.min = t - @timeRange * 1000
     axis.time.max = t
-    @refresh()
+    # @refresh()
 
   # Re-order the data list and series index to be in sorted order by label.
   resortSeries: ->
@@ -144,53 +146,61 @@ class TimeseriesLine extends view.View
 
   # Accept events from a subscription and update the dataset.
   update: (event) ->
+    controller = null
     # Get series for this host/service
     key = util.eventKey event
 
     # If this is a new series, add it.
     unless @series[key]?
+      l      = @data.datasets.length + 1
+      hue    = l * 360 / 12 + (180 * (l % 2))
+      hue    = hue % 360
+      scheme = new ColorScheme
+      scheme.from_hue hue
+            .scheme "monochromatic"
+            .variation "pastel"
+            .web_safe true
+      colors = scheme.colors()
+
       series =
-        riemannKey:     key
-        riemannHost:    event.host or "nil"
-        riemannService: event.service or "nil"
-        shadowSize: 0
-        borderWidth:    @lineWidth
-        # borderColor:    "#000000"
-        # backgroundColor: "#FF0000"
-        fill:           @stackMode is "true"
-        data:           []
-        display:        false
+        riemannKey:          key
+        riemannHost:         event.host or "nil"
+        riemannService:      event.service or "nil"
+        shadowSize:          0
+        borderWidth:         @lineWidth
+        pointBorderWidth:    @lineWidth
+        pointHoverRadius:    10
+        pointRadius:         0
+        pointHitRadius:      10
+        borderColor:         "##{colors[1]}"
+        backgroundColor:     "##{colors[0]}"
+        fill:                @stackMode is "true"
+        data:                []
 
       @data.datasets.push series
       @resortSeries()
-    else
-      @data.datasets[@series[key]].display = true
+      controller = @graph.buildOrUpdateDatasetController series, @data.datasets.indexOf series
 
-    series = @data.datasets[@series[key]].data
-    labels = @data.labels
-    times  = @data.times
+    index        = @series[key]
+    seriesData   = @data.datasets[index].data
+    controller or= (@graph.getDatasetMeta index).controller
+    controller.prepareForUpdate()
 
     # Add event to series
     if event.state is "expired"
-      series.push null
+      seriesData.push null
     else if event.metric?
       etime = moment new Date event.time
       esecs = etime.format "s"
       label = ""
       if (esecs % 15) is 0
         label = if esecs is 0 then (etime.format "mm:ss") else etime.format ":ss"
-      series.push event.metric
-      times.push  event.time # if times.length < series.length
-      labels.push label # if labels.length < series.length
-
-    @setGraphData()
+      seriesData.push y: event.metric, x: event.time
 
   # Tells the Flot graph to use our current dataset.
   setGraphData: ->
     return unless @graph
-    @graph.prepareForUpdate()
     @graph.data = @data
-    console.log @data
     @graph.update()
 
   # Clean up old data points.
@@ -200,16 +210,12 @@ class TimeseriesLine extends view.View
 
     for dataset in @data.datasets
       # We leave one data point off the edge of the graph for continuity.
-      while dataset.data.length > 1 and (dataset.data[1] is null or @data.times[1] < t)
+      while dataset.data.length > 1 and (dataset.data[1] is null or dataset.data[1].x < t)
         dataset.data.shift()
-        @data.times.shift()
-        @data.labels.shift()
 
       # And clean up single data points if necessary.
-      if dataset.data.length is 1 and (dataset.data[0] is null or @data.times[0] < t)
+      if dataset.data.length is 1 and (dataset.data[0] is null or dataset.data[0].x < t)
         dataset.data.shift()
-        @data.times.shift()
-        @data.labels.shift()
 
       else if dataset.data.length is 0
         empties = true
