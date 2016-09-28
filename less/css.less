@@ -1,10 +1,11 @@
 /* Colors! */
+@bmw-white: #FAFAFA;
 @bright-green: #2CFE40;
 @dark-green: #059F00;
 @fuschia: #FD47B7;
 @purple: #7C2CFF;
 @orange: #FF6513;
-@amber: #FFC712;
+@amber: #FCC427;
 @light-blue: #2CCCFE;
 @blue: #2C55FF;
 @dark-grey: #1F1F1F;
@@ -334,6 +335,10 @@ html,table,input {
 }
 .state.critical, .state.failure, .state.err, .bar.critical, .bar.failure, .bar.err {
   background: @orange;
+  color: #000;
+}
+li.state.ok, li.state.okay {
+  background: @bmw-white;
   color: #000;
 }
 
@@ -717,10 +722,10 @@ h2 {
 //
 .knob {
   .box {
-    background: #FAFAFA;
+    background: @bmw-white;
   }
   .box.state.warn, .box.state.warning {
-    background: #FCC427;
+    background: @amber;
   }
   .box.state.critical, .box.state.failure, .box.state.err {
     background: #FF4825;

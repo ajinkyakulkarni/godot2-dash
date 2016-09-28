@@ -279,7 +279,7 @@ input {
 .state.warn,
 .bar.warning,
 .bar.warn {
-  background: #FFC712;
+  background: #FCC427;
   color: #000;
 }
 .state.critical,
@@ -289,6 +289,11 @@ input {
 .bar.failure,
 .bar.err {
   background: #FF6513;
+  color: #000;
+}
+li.state.ok,
+li.state.okay {
+  background: #FAFAFA;
   color: #000;
 }
 .view .query {
