@@ -30,6 +30,7 @@
   ],
   "license": "MIT",
   "dependencies": {
+    "ecstatic": "^2.1.0",
     "engine.io": "^1.6.11",
     "riemann-query-parser": "^1.0.1"
   },
@@ -38,7 +39,6 @@
     "less": "^2.7.1"
   },
   "peerDependencies": {
-    "ecstatic": "^2.1.0",
     "godot2": "^1.9.9"
   }
 }
