@@ -12,6 +12,7 @@ class EngineIOReactor extends stream.PassThrough
 
     @engine = engine.attach @server
     @engine.on "connection", @attachToSocket
+    @engine.on "connection", @emit.bind this, "connection"
 
   attachToSocket: (socket) =>
     {query} = url.parse socket.request.url, true
