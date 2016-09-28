@@ -26,7 +26,6 @@ class EngineIOReactor extends stream.PassThrough
 
     @pipe filter, end: false
     filter.on "data", (data) ->
-      console.log "data", data
       socket.send JSON.stringify data
     socket.on "close", =>
       @unpipe filter
