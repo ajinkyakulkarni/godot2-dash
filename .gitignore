@@ -9,3 +9,5 @@ pkg/
 /config
 node_modules
 config.json
+*.sublime-project
+*.sublime-workspace
