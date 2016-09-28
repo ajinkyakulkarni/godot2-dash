@@ -1,21 +1,17 @@
 #!/usr/bin/env node
 
 var dash = require('../index'),
-    godot = require('godot');
+    godot = require('godot2');
 
 var godotPort = 1337,
     httpPort = 1338;
 
-var dashboard = dash
-  .createServer()
-  .register(godot)
-;
+var dashboard = dash.createServer();
 
 godot.createServer({
   type: 'tcp',
   reactors: [
-    godot.reactor()
-      .dashboard()
+    new dash.reactor(dashboard)
   ]
 }).listen(godotPort);
 
