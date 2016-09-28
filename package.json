@@ -1,6 +1,6 @@
 {
   "name": "godot2-dash",
-  "version": "0.2.133",
+  "version": "0.2.134",
   "description": "HTTP dashboard for Godot2; A port of riemann/riemann-dash",
   "author": "Kyle Kingsbury <aphyr@aphyr.com>",
   "contributors": [
