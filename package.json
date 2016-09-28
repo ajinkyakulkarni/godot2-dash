@@ -2,7 +2,11 @@
   "name": "godot2-dash",
   "version": "0.2.131",
   "description": "HTTP dashboard for Godot2; A port of riemann/riemann-dash",
-  "author": "Joshua Holbrook",
+  "author": "Kyle Kingsbury <aphyr@aphyr.com>",
+  "contributors": [
+    "Joshua Holbrook",
+    "Charles Phillips <charles@doublerebel.com>"
+  ],
   "main": "./index.js",
   "scripts": {
     "start": "node ./bin/godot-dash",
@@ -17,7 +21,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/aphyr/riemann-dash.git"
+    "url": "git://github.com/nextorigin/godot2-dash.git"
   },
   "keywords": [
     "godot",
