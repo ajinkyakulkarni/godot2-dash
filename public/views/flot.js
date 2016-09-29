@@ -5,6 +5,7 @@
       view.View.call(this, json);
       this.query = json.query;
       this.title = json.title;
+      this.showExpired = json.showExpired || false;
       this.max = json.max || null;
       this.min = json.min || null;
       this.graphType = json.graphType || 'line';
@@ -223,7 +224,7 @@
       var series = this.data[this.series[key]].data;
       
       // Add event to series
-      if (event.state === "expired") {
+      if (event.state === "expired" && !this.showExpired) {
         series.push(null);
       } else if (event.metric !== undefined) {
         series.push([event.time, event.metric]);
@@ -278,6 +279,7 @@
         graphType: this.graphType,
         stackMode: this.stackMode,
         tooltips: this.tooltips,
+        showExpired: this.showExpired
       });
     };
 
@@ -307,6 +309,9 @@
       '<textarea type="text" class="query" name="query">{{ query }}</textarea><br />' +
       '<label for="timeRange">Time range (s)</label>' +
       '<input type="text" name="timeRange" value="{{timeRange / 1000}}" />' +
+      '<br />' +
+      '<label for="showExpired">Show expired</label>' +
+      '<input type="checkbox" name="showExpired" {% if(showExpired) { %} checked="checked" {% } %} />' +
       '<br />' +
       '<label for="min">Min</label>' +
       '<input type="text" name="min" value="{{min}}" />' +

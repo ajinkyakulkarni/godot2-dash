@@ -25,9 +25,12 @@ class TimeseriesLine extends view.View
     '<label for="timeRange">Time range (s)</label>' +
     '<input type="text" name="timeRange" value="{{timeRange}}" />' +
     '<br />' +
+    '<label for="showExpired">Show expired</label>' +
+    '<input type="checkbox" name="showExpired" {% if(showExpired) { %} checked="checked" {% } %} />' +
+    '<br />' +
     '<label for="min">Min</label>' +
-    '<input type="text" name="min" value="{{min}}" />' +
-    '<br />' + '<label for="max">Max</label>' +
+    '<input type="text" name="min" value="{{min}}" />' + '<br />' +
+    '<label for="max">Max</label>' +
     '<input type="text" name="max" value="{{max}}" />'
 
   defaults:
@@ -42,6 +45,7 @@ class TimeseriesLine extends view.View
     stepSize:    null
     stackMode:   "false"
     lineWidth:   1
+    showExpired: false
 
   constructor: (options) ->
     super
@@ -187,7 +191,7 @@ class TimeseriesLine extends view.View
     controller.prepareForUpdate()
 
     # Add event to series
-    if event.state is "expired"
+    if event.state is "expired" and not @showExpired
       seriesData.push null
     else if event.metric?
       etime = moment new Date event.time
@@ -237,6 +241,7 @@ class TimeseriesLine extends view.View
       graphType: @graphType
       stackMode: @stackMode
       tooltips:  @tooltips
+      showExpired: @showExpired
 
   # Returns the edit form
   editForm: =>
