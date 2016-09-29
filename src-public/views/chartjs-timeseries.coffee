@@ -2,34 +2,34 @@ extend = (root, objs...) ->
   root[key] = value for key, value of obj for obj in objs
   root
 
-# HTML template used to edit this view
-editTemplate = _.template '<label for="title">title</label>' +
-  '<input type="text" name="title" value="{{title}}" /><br />' +
-  '<label for="stackMode">Stack Mode</label>' +
-  '<select name="stackMode">' +
-  '<option value="true" {% if(stackMode == \'true\') print(\'selected\') %}>Stacked</option>' +
-  '<option value="false" {% if(stackMode == \'false\') print(\'selected\') %}>Normal</option>' +
-  '</select>' +
-  '<br />' +
-  '<label for="tooltips">Tooltips</label>' +
-  '<select name="tooltips">' +
-  '<option value="metric" {% if(tooltips == \'metric\') print(\'selected\') %}>With metric</option>' +
-  '<option value="simple" {% if(tooltips == \'simple\') print(\'selected\') %}>Simple</option>' +
-  '<option value="false" {% if(tooltips == \'false\') print(\'selected\') %}>Disabled</option>' +
-  '</select>' +
-  '<br />' +
-  '<label for="query">query</label>' +
-  '<textarea type="text" class="query" name="query">{{ query }}</textarea><br />' +
-  '<label for="timeRange">Time range (s)</label>' +
-  '<input type="text" name="timeRange" value="{{timeRange}}" />' +
-  '<br />' +
-  '<label for="min">Min</label>' +
-  '<input type="text" name="min" value="{{min}}" />' +
-  '<br />' + '<label for="max">Max</label>' +
-  '<input type="text" name="max" value="{{max}}" />'
-
 
 class TimeseriesLine extends view.View
+  # HTML template used to edit this view
+  editTemplate: _.template '<label for="title">title</label>' +
+    '<input type="text" name="title" value="{{title}}" /><br />' +
+    '<label for="stackMode">Stack Mode</label>' +
+    '<select name="stackMode">' +
+    '<option value="true" {% if(stackMode == \'true\') print(\'selected\') %}>Stacked</option>' +
+    '<option value="false" {% if(stackMode == \'false\') print(\'selected\') %}>Normal</option>' +
+    '</select>' +
+    '<br />' +
+    '<label for="tooltips">Tooltips</label>' +
+    '<select name="tooltips">' +
+    '<option value="metric" {% if(tooltips == \'metric\') print(\'selected\') %}>With metric</option>' +
+    '<option value="simple" {% if(tooltips == \'simple\') print(\'selected\') %}>Simple</option>' +
+    '<option value="false" {% if(tooltips == \'false\') print(\'selected\') %}>Disabled</option>' +
+    '</select>' +
+    '<br />' +
+    '<label for="query">query</label>' +
+    '<textarea type="text" class="query" name="query">{{ query }}</textarea><br />' +
+    '<label for="timeRange">Time range (s)</label>' +
+    '<input type="text" name="timeRange" value="{{timeRange}}" />' +
+    '<br />' +
+    '<label for="min">Min</label>' +
+    '<input type="text" name="min" value="{{min}}" />' +
+    '<br />' + '<label for="max">Max</label>' +
+    '<input type="text" name="max" value="{{max}}" />'
+
   defaults:
     title:       null
     query:       null
@@ -239,8 +239,8 @@ class TimeseriesLine extends view.View
       tooltips:  @tooltips
 
   # Returns the edit form
-  editForm: ->
-    editTemplate this
+  editForm: =>
+    @editTemplate this
 
   # Redraws graph
   refresh: ->

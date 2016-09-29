@@ -1,21 +1,20 @@
-editTemplate = _.template '<label for="title">Title</label>' +
-  '<input type="text" name="title" value="{{title}}" /><br />' +
-  '<label for="query">Query</label>' +
-  '<textarea type="text" name="query" class="query">{{query}}</textarea>' +
-  '<label for="commaSeparateThousands">Comma Separate Thousands</label>' +
-  '<input type="checkbox" name="commaSeparateThousands" {% if(commaSeparateThousands) { %} checked="checked" {% } %} /><br />' +
-  '<label for="max">Maximum</label>' +
-  '<input type="text" name="max" value="{{-max}}" /><br />' +
-  '<label for="unit">Unit</label>' +
-  '<input type="text" name="unit" value="{{unit}}" /><br />'
-
-
 fitopts =
   min: 6
   max: 1000
 
 
 class Knob extends view.View
+  editTemplate: _.template '<label for="title">Title</label>' +
+    '<input type="text" name="title" value="{{title}}" /><br />' +
+    '<label for="query">Query</label>' +
+    '<textarea type="text" name="query" class="query">{{query}}</textarea>' +
+    '<label for="commaSeparateThousands">Comma Separate Thousands</label>' +
+    '<input type="checkbox" name="commaSeparateThousands" {% if(commaSeparateThousands) { %} checked="checked" {% } %} /><br />' +
+    '<label for="max">Maximum</label>' +
+    '<input type="text" name="max" value="{{-max}}" /><br />' +
+    '<label for="unit">Unit</label>' +
+    '<input type="text" name="unit" value="{{unit}}" /><br />'
+
   defaults:
     title:       null
     query:       null
@@ -109,8 +108,8 @@ class Knob extends view.View
       max: @max
       unit: @unit
 
-  editForm: ->
-    editTemplate this
+  editForm: =>
+    @editTemplate this
 
   reflow: ->
     # Size metric
