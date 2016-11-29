@@ -1,9 +1,13 @@
 # Godot2-Dash
 
+[![Dependency Status][dependency]][david]
+[![devDependency Status][dev-dependency]][david-dev]
+[![Downloads][downloads]][npm]
+
 A javascript, engine.io-powered dashboard for [Godot2][godot2]. A port of [riemann-dash][riemann-dash]
 from ruby/sinatra to node.js.
 
-# Get started
+[![NPM][npm-stats]][npm]
 
 ![godot2-dash screenshot](./docs/godot2-dash_Screen-Shot-2016-11-29.png?raw=true "godot2-dash example screenshot")
 ``` bash
@@ -81,3 +85,11 @@ MIT
 
   [godot2]: https://github.com/nextorigin/godot2
   [riemann-dash]: https://github.com/riemann/riemann-dash
+
+  [dependency]: https://img.shields.io/david/nextorigin/godot2-dash.svg?style=flat-square
+  [david]: https://david-dm.org/nextorigin/godot2-dash
+  [dev-dependency]: https://img.shields.io/david/dev/nextorigin/godot2-dash.svg?style=flat-square
+  [david-dev]: https://david-dm.org/nextorigin/godot2-dash?type=dev
+  [downloads]: https://img.shields.io/npm/dm/godot2-dash.svg?style=flat-square
+  [npm]: https://www.npmjs.org/package/godot2-dash
+  [npm-stats]: https://nodei.co/npm/godot2-dash.png?downloads=true&downloadRank=true&stars=true
