@@ -5,6 +5,7 @@ from ruby/sinatra to node.js.
 
 # Get started
 
+![godot2-dash screenshot](./docs/godot2-dash_Screen-Shot-2016-11-29.png?raw=true "godot2-dash example screenshot")
 ``` bash
 $ sudo npm install godot-dash -g
 $ godot-dash
